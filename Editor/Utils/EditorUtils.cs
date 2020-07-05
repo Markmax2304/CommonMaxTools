@@ -12,6 +12,8 @@ namespace CommonMaxTools.Editor.Utils
 {
     public static class EditorUtils
     {
+        #region Auto Assign Utility
+
         /// <summary>
         /// Return a collection of fields with related components that is declared with an attribute of type T
         /// </summary>
@@ -31,19 +33,6 @@ namespace CommonMaxTools.Editor.Utils
             }
 
             return components.ToArray();
-        }
-
-        public struct ComponentField
-        {
-            public readonly FieldInfo Field;
-            // maybe use something else
-            public readonly Component Component;
-
-            public ComponentField(FieldInfo field, Component component)
-            {
-                Field = field;
-                Component = component;
-            }
         }
 
         /// <summary>
@@ -67,6 +56,41 @@ namespace CommonMaxTools.Editor.Utils
 
             return components.ToArray();
         }
+
+        #endregion Auto Assign Utility
+
+        #region Public Methods
+
+        /// <summary>
+        /// Return a collection of <see cref="MethodInfo"/> by specified attribute type for target object
+        /// </summary>
+        public static IEnumerable<MethodInfo> GetMethodsInfoByAttributes<T>(UnityEngine.Object target) where T : Attribute
+        {
+            var methods = target.GetType()
+                .GetMethods(BindingFlags.Instance | BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Static)
+                .Where(m => m.IsDefined(typeof(T)));
+
+            return methods;
+        }
+
+        #endregion Public Methods
+
+        #region Nested Types
+
+        public struct ComponentField
+        {
+            public readonly FieldInfo Field;
+            // maybe use something else
+            public readonly Component Component;
+
+            public ComponentField(FieldInfo field, Component component)
+            {
+                Field = field;
+                Component = component;
+            }
+        }
+
+        #endregion Nested Types
     }
 }
 

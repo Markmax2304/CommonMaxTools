@@ -5,9 +5,8 @@ using UnityEditor;
 
 using CommonMaxTools.Attributes;
 using CommonMaxTools.Editor.Utils;
-using CommonMaxTools.Editor.Tools;
 
-namespace CommonMaxTools.Editor.Attributes
+namespace CommonMaxTools.Editor.Tools.Handlers
 {
     [InitializeOnLoad]
     internal static class AutoAssignHandler

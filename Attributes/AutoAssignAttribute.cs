@@ -14,7 +14,7 @@ namespace CommonMaxTools.Attributes
     /// 
     /// Inspired and stole from MyBox by DeadCow. https://github.com/Deadcows/MyBox
     /// </summary>
-    [AttributeUsage(AttributeTargets.Field)]
+    [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
     public class AutoAssignAttribute : PropertyAttribute
     {
     }
