@@ -1,6 +1,4 @@
-﻿#if UNITY_EDITOR
-
-using System;
+﻿using System;
 
 using UnityEngine;
 
@@ -27,5 +25,3 @@ namespace CommonMaxTools.Editor.Tools
         }
     }
 }
-
-#endif

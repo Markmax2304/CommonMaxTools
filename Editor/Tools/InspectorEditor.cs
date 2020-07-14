@@ -1,12 +1,6 @@
-﻿using System.Collections.Generic;
-using System.Reflection;
-using System.Linq;
+﻿using UnityEditor;
 
-using UnityEngine;
-using UnityEditor;
-
-using CommonMaxTools.Editor.Utils;
-using CommonMaxTools.Attributes;
+using CommonMaxTools.Editor.Attributes.Handlers;
 
 namespace CommonMaxTools.Editor.Tools
 {
@@ -14,12 +8,12 @@ namespace CommonMaxTools.Editor.Tools
     /// Custom editor that is responsible for drawing a special UI elements in Inspector.
     /// For example, buttons that is invoking related methods
     /// </summary>
-    [CustomEditor(typeof(UnityEngine.Object), true)]
+    [CustomEditor(typeof(UnityEngine.Object), true), CanEditMultipleObjects]
     public class InspectorEditor : UnityEditor.Editor
     {
         #region Fields
 
-        private IEnumerable<MethodInfo> methods;
+        private ButtonMethodHandler buttonHandler;
 
         #endregion Fields
 
@@ -27,7 +21,7 @@ namespace CommonMaxTools.Editor.Tools
 
         private void OnEnable()
         {
-            methods = EditorUtils.GetMethodsInfoByAttributes<ButtonMethodAttribute>(target);
+            buttonHandler = new ButtonMethodHandler(target, serializedObject);
         }
 
         private void OnDisable()
@@ -38,36 +32,9 @@ namespace CommonMaxTools.Editor.Tools
         {
             DrawDefaultInspector();
 
-            DrawButtons();
+            buttonHandler.DrawButtons();
         }
 
         #endregion MonoBehaviour
-
-        #region Private Methods
-
-        private void DrawButtons()
-        {
-            if (methods == null || methods.Count() == 0)
-                return;
-
-            EditorGUILayout.Space();
-            EditorGUILayout.LabelField("Button Methods", GetHeaderGUIStyle());
-
-            foreach (var method in methods)
-            {
-                ExtendedEditorGUI.ButtonHandle(serializedObject.targetObject, method);
-            }
-        }
-
-        private static GUIStyle GetHeaderGUIStyle()
-        {
-            GUIStyle style = new GUIStyle(EditorStyles.centeredGreyMiniLabel);
-            style.fontStyle = FontStyle.Bold;
-            style.alignment = TextAnchor.UpperCenter;
-
-            return style;
-        }
-
-        #endregion Private Methods
     }
 }

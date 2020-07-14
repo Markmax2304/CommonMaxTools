@@ -3,8 +3,8 @@ using System.Linq;
 using System.Reflection;
 using System.Collections;
 
-using UnityEditor;
 using UnityEngine;
+using UnityEditor;
 using UnityEditor.SceneManagement;
 using UnityEditor.Experimental.SceneManagement;
 
@@ -72,6 +72,17 @@ namespace CommonMaxTools.Editor.Utils
             }
 
             EditorGUI.EndDisabledGroup();
+        }
+
+        /// <summary>
+        /// Draw colored box in Inspector
+        /// </summary>
+        public static void DrawColorBox(Rect position, Color bgColor, string label = "")
+        {
+            var defaultBGColor = GUI.backgroundColor;
+            GUI.backgroundColor = bgColor;
+            GUI.Box(position, label);
+            GUI.backgroundColor = defaultBGColor;
         }
     }
 }

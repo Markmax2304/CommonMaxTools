@@ -1,6 +1,4 @@
-﻿#if UNITY_EDITOR
-
-using System;
+﻿using System;
 using System.Linq;
 using System.Reflection;
 using System.Collections.Generic;
@@ -93,5 +91,3 @@ namespace CommonMaxTools.Editor.Utils
         #endregion Nested Types
     }
 }
-
-#endif
