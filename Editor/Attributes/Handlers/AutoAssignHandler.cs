@@ -20,7 +20,7 @@ namespace CommonMaxTools.Editor.Tools.Handlers
 
         private static void ProcessAssigningProperties()
         {
-            var componentFields = EditorUtils.GetComponentsByAttribute<AutoAssignAttribute>();
+            var componentFields = ExtendedEditorUtils.GetComponentsByAttribute<AutoAssignAttribute>();
 
             foreach (var componentField in componentFields)
             {
@@ -28,7 +28,7 @@ namespace CommonMaxTools.Editor.Tools.Handlers
             }
         }
 
-        private static void FillProperty(EditorUtils.ComponentField componentField)
+        private static void FillProperty(ExtendedEditorUtils.ComponentField componentField)
         {
             try
             {

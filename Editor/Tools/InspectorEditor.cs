@@ -14,6 +14,7 @@ namespace CommonMaxTools.Editor.Tools
         #region Fields
 
         private ButtonMethodHandler buttonHandler;
+        private FoldoutHandler foldoutHandler;
 
         #endregion Fields
 
@@ -21,18 +22,23 @@ namespace CommonMaxTools.Editor.Tools
 
         private void OnEnable()
         {
-            buttonHandler = new ButtonMethodHandler(target, serializedObject);
+            buttonHandler = new ButtonMethodHandler(target);
+            foldoutHandler = new FoldoutHandler(target, serializedObject);
         }
 
         private void OnDisable()
         {
+            foldoutHandler?.OnDisable();
         }
 
         public override void OnInspectorGUI()
         {
-            DrawDefaultInspector();
+            if (foldoutHandler != null && foldoutHandler.Initialize())
+                foldoutHandler.OnInspectorGUI();
+            else
+                base.OnInspectorGUI();
 
-            buttonHandler.DrawButtons();
+            buttonHandler?.DrawButtons(serializedObject);
         }
 
         #endregion MonoBehaviour

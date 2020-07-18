@@ -16,28 +16,22 @@ namespace CommonMaxTools.Editor.Attributes.Handlers
     {
         #region Fields
 
-        private readonly UnityEngine.Object target;
-        private readonly SerializedObject serializedObject;
-
         private readonly IEnumerable<MethodInfo> methods;
 
         #endregion Fields
 
         #region Constructors
 
-        public ButtonMethodHandler(UnityEngine.Object target, SerializedObject serializedObject)
+        public ButtonMethodHandler(UnityEngine.Object target)
         {
-            this.target = target;
-            this.serializedObject = serializedObject;
-
-            methods = EditorUtils.GetMethodsInfoByAttributes<ButtonMethodAttribute>(target).ToList();
+            methods = ExtendedEditorUtils.GetMethodsInfoByAttributes<ButtonMethodAttribute>(target).ToList();
         }
 
         #endregion Constructors
 
         #region Public Methods
 
-        public void DrawButtons()
+        public void DrawButtons(SerializedObject serializedObject)
         {
             if (methods.IsNullOrEmpty())
                 return;

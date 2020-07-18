@@ -8,7 +8,7 @@ using UnityEngine.SceneManagement;
 
 namespace CommonMaxTools.Editor.Utils
 {
-    public static class EditorUtils
+    public static class ExtendedEditorUtils
     {
         #region Auto Assign Utility
 
@@ -71,6 +71,32 @@ namespace CommonMaxTools.Editor.Utils
             return methods;
         }
 
+        public static List<FieldInfo> GetFieldInfosOfComponent(UnityEngine.Object target)
+        {
+            Type type = target.GetType();
+            var typeTree = type.GetTypeTree();
+
+            var fields = type.GetFields(BindingFlags.Instance | BindingFlags.Static | BindingFlags.Public | BindingFlags.NonPublic)
+                // TODO: test this logic
+                .OrderByDescending(f => typeTree.IndexOf(f.DeclaringType))
+                .ToList();
+
+            return fields;
+        }
+
+        // TODO: if will be usefull, replace in appropriated location
+        public static IList<Type> GetTypeTree(this Type t)
+        {
+            var types = new List<Type>();
+            while (t.BaseType != null)
+            {
+                types.Add(t);
+                t = t.BaseType;
+            }
+
+            return types;
+        }
+
         #endregion Public Methods
 
         #region Nested Types
@@ -78,7 +104,6 @@ namespace CommonMaxTools.Editor.Utils
         public struct ComponentField
         {
             public readonly FieldInfo Field;
-            // maybe use something else
             public readonly Component Component;
 
             public ComponentField(FieldInfo field, Component component)

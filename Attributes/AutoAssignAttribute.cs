@@ -12,7 +12,7 @@ namespace CommonMaxTools.Attributes
     /// Support single fields and arrays. For other types will be thrown error.
     /// Works while scene is being saved.
     /// 
-    /// Inspired and stole from MyBox by DeadCow. https://github.com/Deadcows/MyBox
+    /// Inspired and stole from MyBox by Deadcows. https://github.com/Deadcows/MyBox
     /// </summary>
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
     public class AutoAssignAttribute : PropertyAttribute

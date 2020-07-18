@@ -51,7 +51,7 @@ namespace CommonMaxTools.Editor.Attributes.Drawers
                 return;
 
             if (buttonHandler == null)
-                buttonHandler = new ButtonMethodHandler(property.objectReferenceValue, serializedObject);
+                buttonHandler = new ButtonMethodHandler(property.objectReferenceValue);
 
             float startY = position.y;
             serializedObject = new SerializedObject(property.objectReferenceValue);
@@ -63,7 +63,7 @@ namespace CommonMaxTools.Editor.Attributes.Drawers
 
             DrawBorderBox(startY, property.objectReferenceValue.GetType());
             DrawProperties(pathWrappers);
-            buttonHandler.DrawButtons();
+            buttonHandler.DrawButtons(serializedObject);
 
             if (GUI.changed)
                 serializedObject.ApplyModifiedProperties();
@@ -76,6 +76,9 @@ namespace CommonMaxTools.Editor.Attributes.Drawers
 
             float height = EditorGUI.GetPropertyHeight(property) + interval;
             serializedObject = new SerializedObject(property.objectReferenceValue);
+
+            if (buttonHandler == null)
+                buttonHandler = new ButtonMethodHandler(property.objectReferenceValue);
 
             CollectProperties();
             ProcessPropertyRects(pathWrappers);

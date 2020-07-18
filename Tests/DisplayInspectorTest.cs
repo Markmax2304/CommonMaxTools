@@ -27,7 +27,7 @@ public class TestSettings : ScriptableObject
     [ButtonMethod]
     public void Test()
     {
-
+        Debug.Log("Test is pressed");
     }
 }
 

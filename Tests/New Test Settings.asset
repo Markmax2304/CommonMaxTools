@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 0}
   m_Name: New Test Settings
   m_EditorClassIdentifier: CommonMaxTools::TestSettings
+  value: 0
+  text: 
   position: {x: 0, y: 0, z: 0}
-  messages:
-  - 
-  directions:
-  - {x: 0, y: 0}
+  messages: []
+  directions: []
+  lists: []
