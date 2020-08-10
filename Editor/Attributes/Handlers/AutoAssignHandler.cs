@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Linq;
+using System.Collections.Generic;
 
 using UnityEngine;
 using UnityEditor;
 
 using CommonMaxTools.Attributes;
+using CommonMaxTools.Extensions;
 using CommonMaxTools.Editor.Utils;
 
 namespace CommonMaxTools.Editor.Tools.Handlers
@@ -32,6 +35,8 @@ namespace CommonMaxTools.Editor.Tools.Handlers
         {
             try
             {
+                var attribute = Attribute.GetCustomAttribute(componentField.Field, typeof(AutoAssignAttribute), true) as AutoAssignAttribute;
+
                 Type fieldType = componentField.Field.FieldType;
                 var serializedObject = new SerializedObject(componentField.Component);
                 var serializedProperty = serializedObject.FindProperty(componentField.Field.Name);
@@ -43,19 +48,30 @@ namespace CommonMaxTools.Editor.Tools.Handlers
                     if (!elementType.IsSubclassOf(typeof(Component)))
                         throw new AutoAssignException($"Type {elementType} isn't derevied from Component");
 
-                    UnityEngine.Object[] components = componentField.Component.GetComponentsInChildren(elementType, true);
+                    List<Component> components;
+                    if (attribute.deepLevel == -1)
+                    {
+                        components = componentField.Component.GetComponentsInChildren(elementType, true).ToList();
+                    }
+                    else
+                    {
+                        components = new List<Component>();
+                        componentField.Component.GetComponentsInChildren(elementType, true, attribute.deepLevel, components);
+                    }
 
-                    if (components == null || components.Length == 0)
+                    if (components == null || components.Count == 0)
                         throw new AutoAssignException($"Type {elementType} isn't found in hierarchy of related gameobjects");
 
-                    serializedProperty.ReplaceArrayValues(components);
+                    serializedProperty.ReplaceArrayValues(components.ToArray());
                 }
                 else
                 {
                     if (!fieldType.IsSubclassOf(typeof(Component)))
                         throw new AutoAssignException($"Type {fieldType} isn't derevied from Component");
 
-                    UnityEngine.Object component = componentField.Component.GetComponentInChildren(fieldType, true);
+                    Component component = attribute.deepLevel == -1 ?
+                        componentField.Component.GetComponentInChildren(fieldType, true) :
+                        componentField.Component.GetComponentInChildren(fieldType, true, attribute.deepLevel);
 
                     if (component == null)
                         throw new AutoAssignException($"Type {fieldType} isn't found in hierarchy of related gameobjects");

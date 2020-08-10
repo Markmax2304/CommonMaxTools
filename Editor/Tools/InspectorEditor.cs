@@ -22,8 +22,11 @@ namespace CommonMaxTools.Editor.Tools
 
         private void OnEnable()
         {
-            buttonHandler = new ButtonMethodHandler(target);
-            foldoutHandler = new FoldoutHandler(target, serializedObject);
+            if (target != null)
+            {
+                buttonHandler = new ButtonMethodHandler(target);
+                foldoutHandler = new FoldoutHandler(target, serializedObject);
+            }
         }
 
         private void OnDisable()

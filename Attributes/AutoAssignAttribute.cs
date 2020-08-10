@@ -17,5 +17,16 @@ namespace CommonMaxTools.Attributes
     [AttributeUsage(AttributeTargets.Field, AllowMultiple = false, Inherited = true)]
     public class AutoAssignAttribute : PropertyAttribute
     {
+        public readonly int deepLevel;
+
+        /// <summary>
+        /// Create a new instance of attributes class
+        /// </summary>
+        /// <param name="deepLevel">It shows which level are used for searching on. 
+        /// If parameter is default, search is starting at the root level and continues untill target component is found or until all child elements is processed</param>
+        public AutoAssignAttribute(int deepLevel = -1)
+        {
+            this.deepLevel = deepLevel;
+        }
     }
 }
