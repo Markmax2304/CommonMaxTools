@@ -7,7 +7,7 @@ namespace CommonMaxTools.Attributes
     /// <summary>
     /// Attribute for drawing all data of reference object that is assigned to field of other script.
     /// <para>Another words, it's some kind of nested inspector in general inspector</para>
-    /// <para>For better displaying, fields of reference object is placed in colored box: if object is MonoBehaviour - red box, is ScriptableObject - green box</para>
+    /// <para>For better displaying, fields of reference object is placed in colored box: if object is MonoBehaviour - red box, if ScriptableObject - green box</para>
     /// 
     /// Inspired and improved from MyBox developed by Deadcows. https://github.com/Deadcows/MyBox
     /// </summary>

@@ -46,7 +46,7 @@ namespace CommonMaxTools.Editor.Tools.Handlers
                     Type elementType = fieldType.GetElementType();
 
                     if (!elementType.IsSubclassOf(typeof(Component)))
-                        throw new AutoAssignException($"Type {elementType} isn't derevied from Component");
+                        throw new AutoAssignException($"Type {elementType} isn't derived from Component");
 
                     List<Component> components;
                     if (attribute.deepLevel == -1)
@@ -67,7 +67,7 @@ namespace CommonMaxTools.Editor.Tools.Handlers
                 else
                 {
                     if (!fieldType.IsSubclassOf(typeof(Component)))
-                        throw new AutoAssignException($"Type {fieldType} isn't derevied from Component");
+                        throw new AutoAssignException($"Type {fieldType} isn't derived from Component");
 
                     Component component = attribute.deepLevel == -1 ?
                         componentField.Component.GetComponentInChildren(fieldType, true) :

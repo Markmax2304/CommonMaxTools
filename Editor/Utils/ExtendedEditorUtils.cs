@@ -22,6 +22,9 @@ namespace CommonMaxTools.Editor.Utils
 
             foreach(var behaviour in behaviours)
             {
+                if (behaviour == null)
+                    continue;
+
                 Type type = behaviour.GetType();
                 var matchingFields = type.GetFields(BindingFlags.Public | BindingFlags.NonPublic | BindingFlags.Instance)
                     .Where(field => field.IsDefined(typeof(T), false));
