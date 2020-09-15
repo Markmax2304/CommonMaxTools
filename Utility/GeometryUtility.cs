@@ -2,7 +2,7 @@
 
 namespace CommonMaxTools.Utility
 {
-    public static class VectorUtility
+    public static class GeometryUtility
     {
         #region Vector2
 
