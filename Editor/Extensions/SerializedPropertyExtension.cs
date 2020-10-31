@@ -38,5 +38,26 @@ namespace CommonMaxTools.Editor.Extensions
                     return string.Empty;
             }
         }
+
+        /// <summary>
+        /// Check that property type is int, float or vector
+        /// </summary>
+        public static bool IsNumerical(this SerializedProperty property)
+        {
+            var propertyType = property.propertyType;
+            switch (propertyType)
+            {
+                case SerializedPropertyType.Integer:
+                case SerializedPropertyType.Float:
+                case SerializedPropertyType.Vector2:
+                case SerializedPropertyType.Vector3:
+                case SerializedPropertyType.Vector4:
+                case SerializedPropertyType.Vector2Int:
+                case SerializedPropertyType.Vector3Int:
+                    return true;
+                default:
+                    return false;
+            }
+        }
     }
 }
