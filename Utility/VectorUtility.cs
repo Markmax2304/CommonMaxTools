@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+
+using UnityEngine;
 
 using CommonMaxTools.Extensions;
 
@@ -43,6 +45,34 @@ namespace CommonMaxTools.Utility
         public static Vector2 AbsVector(Vector2 value)
         {
             return new Vector2(Mathf.Abs(value.x), Mathf.Abs(value.y));
+        }
+
+        /// <summary>
+        /// Calculate vector multiplying. 
+        /// It's absolutly the same formula as finding determinant of 2D matrix
+        /// </summary>
+        public static float CalculateVectorProduct(Vector2 v1, Vector2 v2)
+        {
+            return v1.x * v2.y - v1.y * v2.x;
+        }
+
+        /// <summary>
+        /// Gets area with sign of polygon. Sign depends on order of points - clockwise or opposite.
+        /// <para>NOTE! points must be sorted in order of how they are placing on edge of polygon.</para>
+        /// </summary>
+        public static float CalculateSignAreaOfPolygon(List<Vector2> points)
+        {
+            float result = 0;
+
+            for (int i = 0; i < points.Count; i++)
+            {
+                Vector2 point = points[CollectionUtility.RoundIndex(i, points.Count)];
+                Vector2 nextPoint = points[CollectionUtility.RoundIndex(i + 1, points.Count)];
+
+                result += VectorUtility.CalculateVectorProduct(point, nextPoint);
+            }
+
+            return result / 2f;
         }
 
         #endregion Vector2

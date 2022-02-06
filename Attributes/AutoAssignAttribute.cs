@@ -23,7 +23,7 @@ namespace CommonMaxTools.Attributes
         /// Create a new instance of attributes class
         /// </summary>
         /// <param name="deepLevel">It shows which level are used for searching on. 
-        /// If parameter is default, search is starting at the root level and continues untill target component is found or until all child elements is processed</param>
+        /// If parameter is default, search is starting at the root level and continues untill target component is found or until all child elements will be handled</param>
         public AutoAssignAttribute(int deepLevel = -1)
         {
             this.deepLevel = deepLevel;

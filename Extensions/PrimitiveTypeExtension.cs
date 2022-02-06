@@ -6,6 +6,15 @@ namespace CommonMaxTools.Extensions
 {
     public static class PrimitiveTypeExtension
     {
+        #region Int
+
+        public static bool InRange(this int value, int minValue, int maxValue, bool includeMaxValue = true)
+        {
+            return (value >= minValue && value < maxValue) || (includeMaxValue && value == maxValue);
+        }
+
+        #endregion Int
+
         #region Float
 
         /// <summary>
@@ -14,7 +23,7 @@ namespace CommonMaxTools.Extensions
         /// <para>If value is bigger than <see cref="maxValue"/>, method returns one</para>
         /// </summary>
         /// <param name="value">Value to normalize</param>
-        /// <param name="maxValue"> Upper bound of normalization.</param>
+        /// <param name="maxValue"> Max value of normalization.</param>
         /// <returns>Normalized value of [0, 1] bounds</returns>
         public static float Normalize(this float value, float maxValue)
         {

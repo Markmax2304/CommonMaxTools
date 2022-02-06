@@ -9,18 +9,27 @@ namespace CommonMaxTools.Tools
         #region Fields
 
         private const int SEGMENT_COUNT = 60;
+        /// <summary>
+        /// Value that is using to divide alpha channel of color for filling inside figures
+        /// </summary>
         private const float fillColorReducer = 4f;
+        /// <summary>
+        /// Value that defines radius of circle for points that are painted above vertices, for example, in rectangle figure
+        /// </summary>
+        private const float pointRadius = .1f;
 
         private static Color gizmosColor;
 
-        private static List<Vector2> drawedPoints = new List<Vector2>();
+        private static List<Vector2> drawingPoints = new List<Vector2>();
 
         #endregion Fields
+
+        #region Public Methods
 
         public static void DrawCircle(Vector2 center, float radius, Color color)
         {
             CalculateCirclePoints(center, radius);
-            DrawMultiLine(drawedPoints, true, color);
+            DrawMultiLine(drawingPoints, true, color);
         }
 
         public static void DrawFillCircle(Vector2 center, float radius, Color color, bool isBorder = true)
@@ -42,7 +51,7 @@ namespace CommonMaxTools.Tools
 
             for (int i = 0; i < SEGMENT_COUNT; i++)
             {
-                vertices[i + 1] = drawedPoints[i];
+                vertices[i + 1] = drawingPoints[i];
                 normals[i + 1] = Vector3.back;
                 triangles[3 * i] = 0;
                 triangles[3 * i + 1] = (i + 1) % SEGMENT_COUNT + 1;
@@ -58,12 +67,12 @@ namespace CommonMaxTools.Tools
             RollBackColor();
 
             if (isBorder)
-                DrawMultiLine(drawedPoints, true, color);
+                DrawMultiLine(drawingPoints, true, color);
         }
 
         public static void DrawCircleSector(Vector2 center, Vector2 startDir, float angle, float radius, Color color)
         {
-            drawedPoints.Clear();
+            drawingPoints.Clear();
 
             startDir.Normalize();
             float deltaAngle = 360f / SEGMENT_COUNT;
@@ -77,10 +86,10 @@ namespace CommonMaxTools.Tools
                 angleCounter = Mathf.Clamp(angleCounter, -angle, angle);
                 Quaternion rotation = Quaternion.AngleAxis(angleCounter * side, Vector3.forward);
                 Vector2 point = (rotation * startDir) * Mathf.Abs(radius);
-                drawedPoints.Add(center + point);
+                drawingPoints.Add(center + point);
             }
 
-            DrawMultiLine(drawedPoints, false, color);
+            DrawMultiLine(drawingPoints, false, color);
 
             // TODO: implement drawing of limited radiuses for sector
         }
@@ -104,7 +113,32 @@ namespace CommonMaxTools.Tools
             RollBackColor();
         }
 
-        #region Private Fields
+        public static void DrawRectangle(Vector2 upperRight, Vector2 lowerLeft, Color color, bool isVerticesSelected = false)
+        {
+            drawingPoints.Clear();
+
+            drawingPoints.Add(upperRight);
+            drawingPoints.Add(new Vector2(upperRight.x, lowerLeft.y));
+            drawingPoints.Add(lowerLeft);
+            drawingPoints.Add(new Vector2(lowerLeft.x, upperRight.y));
+
+            DrawMultiLine(drawingPoints, true, color);
+
+            if (isVerticesSelected)
+            {
+                DrawFillCircle(upperRight, pointRadius, color);
+                DrawFillCircle(lowerLeft, pointRadius, color);
+            }
+        }
+
+        public static void DrawFillRectangle(Vector2 upperRight, Vector2 lowerLeft, Color color)
+        {
+            throw new System.NotImplementedException();
+        }
+
+        #endregion Public Methods
+
+        #region Private Methods
 
         private static void SetColor(Color color)
         {
@@ -119,16 +153,16 @@ namespace CommonMaxTools.Tools
 
         private static void CalculateCirclePoints(Vector2 center, float radius)
         {
-            drawedPoints.Clear();
+            drawingPoints.Clear();
 
             for (int i = 0; i < SEGMENT_COUNT; i++)
             {
                 float angle = i * 2f * Mathf.PI / SEGMENT_COUNT;
                 Vector2 point = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle)) * radius;
-                drawedPoints.Add(center + point);
+                drawingPoints.Add(center + point);
             }
         }
 
-        #endregion Private Fields
+        #endregion Private Methods
     }
 }
