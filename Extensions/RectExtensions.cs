@@ -16,6 +16,17 @@ namespace CommonMaxTools.Extensions
         }
 
         /// <summary>
+        /// Create new one rect which can contain both passing rects, and which has common borders with them
+        /// </summary>
+        public static Rect Merge(this Rect oneRect, Rect otherRect)
+        {
+            Vector2 min = Vector2.Min(oneRect.min, otherRect.min);
+            Vector2 max = Vector2.Max(oneRect.max, otherRect.max);
+
+            return Rect.MinMaxRect(min.x, min.y, max.x, max.y);
+        }
+
+        /// <summary>
         /// Scales Rect by passed scale based on passed center
         /// </summary>
         public static Rect ScaleTo(this Rect rect, float scale, Vector2 center)
