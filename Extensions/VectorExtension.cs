@@ -25,14 +25,19 @@ namespace CommonMaxTools.Extensions
             return new Vector3Int(vector.x, vector.y, z);
         }
 
+        public static Vector2 ToVector2(this Vector2Int vector)
+        {
+            return new Vector2(vector.x, vector.y);
+        }
+
         public static Vector2Int ToVector2Int(this Vector2 vector)
         {
             return new Vector2Int((int)vector.x, (int)vector.y);
         }
 
-        public static Vector2 ToVector2(this Vector2Int vector)
+        public static Vector2Int ToVector2Int(this Vector3Int vector)
         {
-            return new Vector2(vector.x, vector.y);
+            return new Vector2Int(vector.x, vector.y);
         }
 
         #endregion Vector Casting
