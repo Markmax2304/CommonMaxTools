@@ -10,16 +10,6 @@ namespace CommonMaxTools.SerializatinoEntities
         public int x;
         public int y;
 
-        public static implicit operator SerializedVector2Int(Vector2Int vector)
-        {
-            return new SerializedVector2Int() { x = vector.x, y = vector.y };
-        }
-
-        public static explicit operator Vector2Int(SerializedVector2Int vector)
-        {
-            return new Vector2Int(vector.x, vector.y);
-        }
-
         public override int GetHashCode()
         {
             return ((Vector2Int)this).GetHashCode();
@@ -38,6 +28,26 @@ namespace CommonMaxTools.SerializatinoEntities
         public override string ToString()
         {
             return String.Format("({0}, {1})", x, y);
+        }
+
+        public static implicit operator SerializedVector2Int(Vector2Int vector)
+        {
+            return new SerializedVector2Int() { x = vector.x, y = vector.y };
+        }
+
+        public static explicit operator Vector2Int(SerializedVector2Int vector)
+        {
+            return new Vector2Int(vector.x, vector.y);
+        }
+        
+        public static bool operator ==(SerializedVector2Int first, SerializedVector2Int second)
+        {
+            return first.Equals(second);
+        }
+
+        public static bool operator !=(SerializedVector2Int first, SerializedVector2Int second)
+        {
+            return !first.Equals(second);
         }
     }
 }
